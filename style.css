@@ -1,0 +1,136 @@
+/* Simple Energy Sangamner - AI Review Assistant Theme */
+:root {
+  --primary-blue: #0052ff;
+  --primary-dark: #003bb5;
+  --primary-light: #e8f0fe;
+  --primary-glow: rgba(0, 82, 255, 0.25);
+  --accent-cyan: #00d2ff;
+  --text-dark: #0f172a;
+  --text-muted: #64748b;
+  --bg-light: #f8fafc;
+  --card-bg: #ffffff;
+  --gold-star: #fbbf24;
+  --gold-star-active: #f59e0b;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Glassmorphism & Card Styles */
+.brand-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px -2px rgba(0, 82, 255, 0.08);
+  transition: all 0.25s ease;
+}
+
+.brand-card:hover {
+  box-shadow: 0 8px 30px -4px rgba(0, 82, 255, 0.12);
+}
+
+.brand-button-primary {
+  background: linear-gradient(135deg, #0052ff 0%, #003bb5 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 14px 0 rgba(0, 82, 255, 0.39);
+  transition: all 0.2s ease;
+}
+
+.brand-button-primary:hover {
+  background: linear-gradient(135deg, #0045d8 0%, #003199 100%);
+  box-shadow: 0 6px 20px rgba(0, 82, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.brand-button-primary:active {
+  transform: translateY(1px);
+}
+
+/* Pulsing highlight for Google CTA button */
+@keyframes pulse-subtle {
+  0%, 100% {
+    box-shadow: 0 4px 16px rgba(0, 82, 255, 0.4);
+  }
+  50% {
+    box-shadow: 0 6px 24px rgba(0, 82, 255, 0.65);
+  }
+}
+
+.pulse-cta {
+  animation: pulse-subtle 2.5s infinite;
+}
+
+/* Custom Chip Styles */
+.chip-btn {
+  border: 1.5px solid #e2e8f0;
+  background-color: #ffffff;
+  color: #334155;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.chip-btn:hover {
+  border-color: #93c5fd;
+  background-color: #eff6ff;
+  color: #0052ff;
+}
+
+.chip-btn.active {
+  border-color: #0052ff;
+  background-color: #e8f0fe;
+  color: #0052ff;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 82, 255, 0.15);
+}
+
+/* Star rating interaction */
+.star-btn {
+  font-size: 2.25rem;
+  color: #cbd5e1;
+  transition: transform 0.15s ease, color 0.15s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+.star-btn.active {
+  color: var(--gold-star);
+  text-shadow: 0 2px 8px rgba(245, 158, 11, 0.35);
+}
+
+.star-btn:hover {
+  transform: scale(1.15);
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Printable Standee Styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  body {
+    background: #ffffff !important;
+    padding: 0 !important;
+  }
+}

@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Simple Energy Sangamner - AI Review Assistant | Viraaj EV Motors</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#0052ff',
+              600: '#0047e0',
+              700: '#003bb5',
+              900: '#0a192f',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-50 min-h-screen text-slate-800 pb-12 font-sans">
+
+  <!-- Top Showroom Contact Strip -->
+  <header class="bg-brand-900 text-white text-xs md:text-sm py-2.5 px-4 shadow-sm border-b border-slate-800">
+    <div class="max-w-4xl mx-auto flex flex-wrap justify-between items-center gap-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="text-slate-300 text-xs">अधिकृत विक्रेता:</span>
+        <span class="font-extrabold text-white tracking-wider">VIRAAJ EV MOTORS</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="tel:8552885656" class="flex items-center gap-1.5 text-blue-200 hover:text-white transition font-bold text-xs sm:text-sm">
+          <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 4V3z"></path>
+          </svg>
+          8552885656
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero & Brand Showcase with Official User-Provided Logo (High-Res 758x206) -->
+  <div class="bg-white border-b border-slate-200 shadow-sm py-3.5">
+    <div class="max-w-4xl mx-auto px-4 flex flex-wrap items-center justify-between gap-4">
+      
+      <!-- Brand Logo & Showroom Title -->
+      <div class="flex items-center gap-3 sm:gap-4 select-none">
+        
+        <!-- Official Logo Image (Cropped crisp high-res 758x206 with secret 5-tap for owner) -->
+        <div id="brandLogoClickable" class="cursor-pointer transition hover:opacity-95" title="Simple Energy Sangamner">
+          <img src="assets/official-logo.png" alt="SimpleEnergy Sangamner" class="h-11 sm:h-14 w-auto object-contain">
+        </div>
+
+        <!-- Sleek Divider -->
+        <div class="h-10 w-px bg-slate-200 hidden sm:block mx-1"></div>
+
+        <!-- Native Typography: Authorized Dealer VIRAAJ EV MOTORS -->
+        <div class="hidden sm:flex flex-col justify-center">
+          <span class="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Authorized Dealer</span>
+          <span class="text-base sm:text-lg font-black text-slate-900 tracking-wider">VIRAAJ EV MOTORS</span>
+        </div>
+
+      </div>
+      
+      <!-- Right Quick Action Badge -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-xs font-bold shadow-xs">
+        <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+        <span>⚡ 10-Sec Quick Review</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <main class="max-w-3xl mx-auto px-4 mt-6">
+    
+    <!-- Title Card -->
+    <div class="text-center mb-6">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-bold uppercase tracking-wider mb-2">
+        ⚡ Official Google Review Assistant
+      </div>
+      <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+        Simple Energy Sangamner
+      </h1>
+      <p class="text-xs sm:text-sm text-slate-600 mt-1 max-w-lg mx-auto">
+        Share your experience in 10 seconds. Our AI will craft your review and open Google Maps for 1-click posting!
+      </p>
+    </div>
+
+    <!-- STEP 1: Star Rating (Default 5 Stars) -->
+    <div class="brand-card p-5 sm:p-6 mb-5 text-center">
+      <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Step 1 • How was your experience?</h2>
+      
+      <div class="flex justify-center items-center gap-2 my-2" id="starContainer">
+        <button class="star-btn active" data-value="1">★</button>
+        <button class="star-btn active" data-value="2">★</button>
+        <button class="star-btn active" data-value="3">★</button>
+        <button class="star-btn active" data-value="4">★</button>
+        <button class="star-btn active" data-value="5">★</button>
+      </div>
+
+      <p id="ratingLabel" class="font-bold text-slate-800 text-base mt-1">5 Star Rating Selected ⭐</p>
+      <p id="ratingHelp" class="text-xs text-slate-500 mt-0.5">Thank you! We will prepare your positive review note for Google.</p>
+    </div>
+
+    <!-- GRIEVANCE CONTAINER (Shows only if rating is 1, 2, or 3 stars) -->
+    <div id="grievanceContainer" class="hidden brand-card p-6 mb-5 border-amber-300 bg-amber-50/50">
+      <div class="flex items-start gap-3">
+        <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center shrink-0">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+          </svg>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold text-slate-900">We Apologize for Your Experience</h3>
+          <p class="text-sm text-slate-600 mt-1">
+            Customer satisfaction is our highest priority at Simple Energy Sangamner. Please let our showroom manager know directly so we can resolve your issue immediately.
+          </p>
+          <div class="mt-4">
+            <textarea id="grievanceText" rows="3" class="w-full p-3 border border-amber-300 rounded-xl bg-white text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="Please describe what went wrong or how we can improve..."></textarea>
+          </div>
+          <div class="mt-3 flex flex-wrap gap-2">
+            <button id="grievanceWhatsAppBtn" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-lg flex items-center gap-2 transition shadow">
+              <span>💬 Message Manager on WhatsApp</span>
+            </button>
+            <a href="tel:8552885656" class="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white font-semibold text-xs rounded-lg flex items-center gap-2 transition">
+              <span>📞 Call 8552885656</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POSITIVE FLOW CONTAINER (Shows when 4 or 5 stars selected) -->
+    <div id="positiveFlowContainer" class="space-y-5">
+
+      <!-- STEP 2: Visit Purpose (Buy vs Service) -->
+      <div class="brand-card p-5 sm:p-6">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">Step 2 • Purpose of your visit</h2>
+        <div class="grid grid-cols-2 gap-3">
+          <button id="tabBuy" onclick="setPurpose('buy')" class="brand-button-primary p-4 rounded-xl flex flex-col items-center justify-center text-center transition">
+            <span class="text-2xl mb-1">🛵</span>
+            <span class="font-bold text-sm sm:text-base">Bought a Scooter</span>
+            <span class="text-xs opacity-90">नवीन स्कूटर खरेदी</span>
+          </button>
+          <button id="tabService" onclick="setPurpose('service')" class="bg-white border border-slate-200 text-slate-700 p-4 rounded-xl flex flex-col items-center justify-center text-center transition hover:border-blue-400">
+            <span class="text-2xl mb-1">🔧</span>
+            <span class="font-bold text-sm sm:text-base">Scooter Service</span>
+            <span class="text-xs opacity-75">स्कूटर सर्व्हिसिंग</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 3: Scooter Models & Variants (All 3 Models & 8 Variants) -->
+      <div class="brand-card p-5 sm:p-6">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Step 3 • Select Scooter Model &amp; Variant</h2>
+        <p id="modelPrompt" class="text-sm font-medium text-slate-700 mb-3">Which Simple Energy scooter did you buy?</p>
+        
+        <!-- Category Selector (Simple Wave, Simple One, Simple Ultra) -->
+        <div class="grid grid-cols-3 gap-2 mb-4">
+          <button class="chip-btn model-cat-chip p-2.5 sm:p-3 rounded-xl font-bold text-xs sm:text-sm text-center" data-cat="Simple Wave">
+            1. Simple Wave
+          </button>
+          <button class="chip-btn model-cat-chip active p-2.5 sm:p-3 rounded-xl font-bold text-xs sm:text-sm text-center" data-cat="Simple One">
+            2. Simple One
+          </button>
+          <button class="chip-btn model-cat-chip p-2.5 sm:p-3 rounded-xl font-bold text-xs sm:text-sm text-center" data-cat="Simple Ultra">
+            3. Simple Ultra
+          </button>
+        </div>
+
+        <!-- Dynamic Variant Chips Container -->
+        <div class="bg-slate-50 p-3 sm:p-4 rounded-xl border border-slate-200">
+          <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Choose Specific Variant:</div>
+          <div id="variantChipsContainer" class="flex flex-wrap gap-2">
+            <!-- Injected by app.js -->
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4: Camera / Gallery Delivery Photo Upload -->
+      <div class="brand-card p-5 sm:p-6">
+        <div class="flex items-center justify-between mb-2">
+          <h2 id="photoSectionHeading" class="text-xs font-bold uppercase tracking-wider text-slate-500">Step 4 • Add Delivery Photo (Optional)</h2>
+          <span class="text-[11px] text-blue-600 font-semibold bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-200">Boosts Google Ranking 🚀</span>
+        </div>
+        <p class="text-xs text-slate-600 mb-3">
+          Take a live photo with your scooter or select one from your gallery.
+        </p>
+
+        <!-- Upload Controls -->
+        <div id="photoUploadControls" class="grid grid-cols-2 gap-3">
+          <!-- Camera Input -->
+          <label class="cursor-pointer border-2 border-dashed border-blue-300 hover:border-blue-500 hover:bg-blue-50/50 rounded-xl p-3.5 flex flex-col items-center justify-center text-center transition">
+            <svg class="w-6 h-6 text-blue-600 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+            <span class="text-xs font-bold text-slate-800">Take Instant Photo</span>
+            <span class="text-[10px] text-slate-500">Open Camera</span>
+            <input type="file" id="cameraInput" accept="image/*" capture="environment" class="hidden">
+          </label>
+
+          <!-- Gallery Input -->
+          <label class="cursor-pointer border-2 border-dashed border-slate-300 hover:border-blue-400 hover:bg-slate-50 rounded-xl p-3.5 flex flex-col items-center justify-center text-center transition">
+            <svg class="w-6 h-6 text-slate-600 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+            <span class="text-xs font-bold text-slate-800">Choose from Gallery</span>
+            <span class="text-[10px] text-slate-500">Pick from photos</span>
+            <input type="file" id="galleryInput" accept="image/*" class="hidden">
+          </label>
+        </div>
+
+        <!-- Preview Box (Hidden by default) -->
+        <div id="photoPreviewBox" class="hidden mt-3 p-3 bg-blue-50/70 border border-blue-200 rounded-xl flex items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <img id="uploadedPhotoPreview" src="" alt="Delivery Photo Preview" class="w-16 h-16 object-cover rounded-lg border border-white shadow-sm">
+            <div>
+              <p class="text-xs font-bold text-slate-800">Photo Attached! 📸</p>
+              <p class="text-[11px] text-slate-500">Ready to post with your review on Google.</p>
+            </div>
+          </div>
+          <button id="removePhotoBtn" class="text-xs font-semibold text-rose-600 hover:text-rose-800 px-2 py-1 rounded bg-white border border-rose-200">
+            Remove
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 5: Key Experience & Highlights -->
+      <div class="brand-card p-5 sm:p-6">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Step 5 • How was your experience?</h2>
+        
+        <!-- Experience Tag: Excellent, Good, Other -->
+        <div class="flex flex-wrap gap-2 mb-4">
+          <button class="chip-btn exp-chip active px-4 py-2 rounded-lg text-sm font-semibold" data-exp="Excellent">
+            🌟 Excellent
+          </button>
+          <button class="chip-btn exp-chip px-4 py-2 rounded-lg text-sm font-semibold" data-exp="Good">
+            👍 Good
+          </button>
+          <button class="chip-btn exp-chip px-4 py-2 rounded-lg text-sm font-semibold" data-exp="Other">
+            ✨ Other / Impressed
+          </button>
+        </div>
+
+        <p class="text-xs font-semibold text-slate-600 mb-2">Select key highlights (optional):</p>
+        
+        <!-- Purchase Highlights -->
+        <div id="highlightsBuy" class="flex flex-wrap gap-2">
+          <button class="chip-btn highlight-chip px-3 py-1.5 rounded-lg text-xs" data-highlight="smooth_delivery">
+            🎉 Smooth Delivery Ceremony
+          </button>
+          <button class="chip-btn highlight-chip px-3 py-1.5 rounded-lg text-xs" data-highlight="great_range">
+            ⚡ Best Battery Range &amp; Pickup
+          </button>
+          <button class="chip-btn highlight-chip px-3 py-1.5 rounded-lg text-xs" data-highlight="polite_staff">
+            🤝 Polite &amp; Supportive Staff
+          </button>
+          <button class="chip-btn highlight-chip px-3 py-1.5 rounded-lg text-xs" data-highlight="quick_finance">
+            📄 Fast Loan &amp; Paperwork
+          </button>
+          <button class="chip-btn highlight-chip px-3 py-1.5 rounded-lg text-xs" data-highlight="test_ride">
+            🛵 Detailed Test Ride
+          </button>
+        </div>
+
+        <!-- Service Highlights -->
+        <div id="highlightsService" class="hidden flex flex-wrap gap-2">
+          <button class="chip-btn highlight-chip px-3 py-1.5 rounded-lg text-xs" data-highlight="on_time">
+            ⏱️ On-Time Delivery
+          </button>
+          <button class="chip-btn highlight-chip px-3 py-1.5 rounded-lg text-xs" data-highlight="clean_wash">
+            ✨ Clean Washing &amp; Polish
+          </button>
+          <button class="chip-btn highlight-chip px-3 py-1.5 rounded-lg text-xs" data-highlight="polite_tech">
+            👨‍🔧 Skilled &amp; Polite Technicians
+          </button>
+          <button class="chip-btn highlight-chip px-3 py-1.5 rounded-lg text-xs" data-highlight="battery_check">
+            🔋 Battery &amp; Software Diagnostics
+          </button>
+          <button class="chip-btn highlight-chip px-3 py-1.5 rounded-lg text-xs" data-highlight="fair_charges">
+            💰 Honest &amp; Transparent Charges
+          </button>
+        </div>
+
+        <!-- Optional Custom Note Input -->
+        <div class="mt-3">
+          <input type="text" id="customExpInput" placeholder="Add any custom point (optional, e.g. quick delivery, very happy)..." class="w-full px-3 py-2 text-xs border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50">
+        </div>
+
+        <!-- OPTIONAL OWNER & STAFF APPRECIATION TOGGLE (User-controlled) -->
+        <div class="mt-4 p-3 bg-blue-50/60 border border-blue-200 rounded-xl flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <input type="checkbox" id="includeThanksToggle" checked class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500 cursor-pointer">
+            <label for="includeThanksToggle" id="includeThanksLabel" class="text-xs font-bold text-slate-800 cursor-pointer">
+              Include Special Thanks to Showroom Owner &amp; Staff
+            </label>
+          </div>
+          <span class="text-[10px] text-blue-600 font-semibold bg-white border border-blue-200 px-2 py-0.5 rounded-md hidden sm:inline-block">Optional</span>
+        </div>
+
+      </div>
+
+      <!-- STEP 6: Review Length & Language Preference -->
+      <div class="brand-card p-5 sm:p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <!-- Review Length (Strict user bounds: 2-3 max 4, 4-5 max 6, 7-8 max 9) -->
+          <div>
+            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Step 6 • Review Length</h2>
+            <div class="flex flex-col gap-2">
+              <button class="chip-btn length-chip p-2.5 rounded-lg text-left text-xs font-medium flex items-center justify-between" data-length="short">
+                <span>⚡ <strong>Short:</strong> 2–3 lines</span>
+                <span class="text-slate-400 font-mono text-[11px]">(Max 4 lines)</span>
+              </button>
+              <button class="chip-btn length-chip active p-2.5 rounded-lg text-left text-xs font-medium flex items-center justify-between" data-length="medium">
+                <span>📝 <strong>Medium:</strong> 4–5 lines</span>
+                <span class="text-slate-400 font-mono text-[11px]">(Max 6 lines)</span>
+              </button>
+              <button class="chip-btn length-chip p-2.5 rounded-lg text-left text-xs font-medium flex items-center justify-between" data-length="deep">
+                <span>📖 <strong>Detailed:</strong> 7–8 lines</span>
+                <span class="text-slate-400 font-mono text-[11px]">(Max 9 lines)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Language Preference (100% PURE LANGUAGE) -->
+          <div>
+            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Step 7 • 100% Pure Language</h2>
+            <div class="flex flex-col gap-2">
+              <button class="chip-btn lang-btn active p-2.5 rounded-lg text-left text-xs font-medium flex items-center justify-between" data-lang="en">
+                <span>🇬🇧 <strong>English</strong></span>
+                <span class="text-slate-400">100% Pure English</span>
+              </button>
+              <button class="chip-btn lang-btn p-2.5 rounded-lg text-left text-xs font-medium flex items-center justify-between" data-lang="mr">
+                <span>🇮🇳 <strong>मराठी (Marathi)</strong></span>
+                <span class="text-slate-400">१००% अस्सल मराठी</span>
+              </button>
+              <button class="chip-btn lang-btn p-2.5 rounded-lg text-left text-xs font-medium flex items-center justify-between" data-lang="hi">
+                <span>🇮🇳 <strong>हिंदी (Hindi)</strong></span>
+                <span class="text-slate-400">१००% शुद्ध हिंदी</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- STEP 8: AI Generated Review Preview & Main Action -->
+      <div class="brand-card p-5 sm:p-6 border-blue-200 bg-gradient-to-b from-blue-50/40 to-white shadow-lg">
+        
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <span class="flex h-3 w-3 relative">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-3 w-3 bg-blue-600"></span>
+            </span>
+            <span class="text-xs font-bold text-blue-900 uppercase tracking-wider">AI Generated Review Note</span>
+          </div>
+          
+          <!-- Prominent Refresh / Try Another button -->
+          <button id="regenerateBtn" class="text-xs font-bold text-blue-700 hover:text-blue-900 flex items-center gap-1.5 bg-blue-100 hover:bg-blue-200 border border-blue-300 px-3 py-1.5 rounded-lg shadow-sm transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+            <span>🔄 Refresh (Try Another)</span>
+          </button>
+        </div>
+
+        <!-- Editable Review Text Box -->
+        <div class="relative mb-3">
+          <textarea id="reviewText" rows="6" class="w-full p-4 text-sm text-slate-800 bg-white border border-blue-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 font-normal leading-relaxed shadow-inner transition" placeholder="Your AI review will appear here..."></textarea>
+          
+          <div class="text-[11px] text-slate-500 mt-1 flex flex-wrap justify-between items-center gap-1">
+            <span>💡 <em>Don't like this? Tap <strong>Refresh</strong> above for a different review!</em></span>
+            <span class="text-emerald-600 font-semibold">✓ 100% Pure Language Consistency</span>
+          </div>
+        </div>
+
+        <!-- Secondary Refresh link -->
+        <div class="mb-4 flex justify-end">
+          <button id="refreshReviewActionBtn" type="button" class="text-xs text-blue-600 hover:text-blue-800 underline font-medium flex items-center gap-1">
+            <span>Not satisfied? Click here to generate another variation ↻</span>
+          </button>
+        </div>
+
+        <!-- THE 2-in-1 ACTION BUTTON -->
+        <div class="pt-1">
+          <button id="copyAndOpenBtn" class="brand-button-primary pulse-cta w-full py-4 px-6 rounded-xl font-bold text-base sm:text-lg flex items-center justify-center gap-3 transition">
+            <svg class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l7.59-7.59L21 8l-9 9z"/>
+            </svg>
+            <span>📋 Copy Review &amp; Open Google</span>
+          </button>
+          
+          <div class="mt-2 text-center text-xs text-slate-500 flex items-center justify-center gap-1">
+            <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            <span>1-Click: Review copies to clipboard and opens Google Review page automatically</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- PROFESSIONAL MODERN SHOWROOM CARD -->
+    <div class="mt-8 rounded-2xl overflow-hidden shadow-lg border border-blue-900 bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-950 text-white">
+      
+      <!-- Top Strip with Phone & Authorized Dealer Info -->
+      <div class="p-5 sm:p-6 flex flex-col md:flex-row items-center justify-between gap-4 border-b border-white/10">
+        
+        <!-- Left: Phone Calling Section -->
+        <div class="flex items-center gap-3.5 w-full md:w-auto">
+          <div class="w-12 h-12 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-emerald-400 shrink-0 shadow-inner">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 4V3z"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="text-[11px] font-bold text-blue-200 tracking-wider">आजच संपर्क करा / Call Today</div>
+            <a href="tel:8552885656" class="text-2xl sm:text-3xl font-black tracking-tight text-white hover:text-emerald-300 transition">
+              8552885656
+            </a>
+          </div>
+        </div>
+
+        <div class="hidden md:block h-10 w-px bg-white/20"></div>
+
+        <!-- Right: Authorized Dealer Badge -->
+        <div class="w-full md:w-auto text-left md:text-right">
+          <div class="text-[11px] font-semibold text-blue-200 tracking-wider uppercase">अधिकृत विक्रेता • Authorized Dealer</div>
+          <div class="text-xl sm:text-2xl font-black text-white tracking-wide">
+            VIRAAJ EV MOTORS
+          </div>
+          <div class="text-[10px] text-blue-300">Simple Energy Sangamner Store</div>
+        </div>
+
+      </div>
+
+      <!-- Address & Direct Action Buttons -->
+      <div class="p-4 sm:p-5 bg-black/20 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+        
+        <div class="flex items-start gap-2.5 text-slate-200">
+          <svg class="w-5 h-5 text-rose-400 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+          </svg>
+          <div>
+            <strong class="text-white">पत्ता:</strong> स.न. 117/1/1, पंचायत समिती जवळ, बुटेट शोरूमच्या शेजारी, नगर रोड, संगमनेर - 422605
+            <div class="text-[10px] text-slate-400 mt-0.5">*Terms &amp; Conditions Apply.</div>
+          </div>
+        </div>
+
+        <div class="shrink-0 flex items-center gap-2.5 w-full sm:w-auto">
+          <a href="tel:8552885656" class="flex-1 sm:flex-none px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-slate-900 rounded-xl font-bold transition flex items-center justify-center gap-1.5 shadow">
+            <span>📞 Call</span>
+          </a>
+          <a href="https://maps.app.goo.gl/kRE9Zcui61BRVoaZ8" target="_blank" class="flex-1 sm:flex-none px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl font-semibold border border-white/20 transition flex items-center justify-center gap-1.5">
+            <span>📍 Open in Maps</span>
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- MODAL: COPY SUCCESS & GOOGLE GUIDANCE -->
+  <div id="copySuccessModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-sm w-full p-6 text-center shadow-2xl transform transition-all border border-blue-100">
+      <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+      </div>
+      <h3 class="text-xl font-bold text-slate-900">Review Copied! 👍</h3>
+      <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+        Google Reviews is opening right now. In Google:
+      </p>
+      
+      <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 my-4 text-xs text-left space-y-2.5 text-slate-700">
+        <div class="flex items-center gap-2">
+          <span class="w-5 h-5 rounded-full bg-blue-600 text-white font-bold text-[10px] flex items-center justify-center shrink-0">1</span>
+          <span>Tap <strong>⭐⭐⭐⭐⭐ (5 Stars)</strong></span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="w-5 h-5 rounded-full bg-blue-600 text-white font-bold text-[10px] flex items-center justify-center shrink-0">2</span>
+          <span>Long-press the text box &amp; tap <strong>"Paste"</strong></span>
+        </div>
+        <div id="photoUploadHint" class="flex items-center gap-2 hidden">
+          <span class="w-5 h-5 rounded-full bg-emerald-600 text-white font-bold text-[10px] flex items-center justify-center shrink-0">3</span>
+          <span>Tap the <strong>📷 Camera / Photo</strong> icon in Google to attach your delivery photo!</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="w-5 h-5 rounded-full bg-blue-600 text-white font-bold text-[10px] flex items-center justify-center shrink-0">✓</span>
+          <span>Tap <strong>"Post"</strong> to submit!</span>
+        </div>
+      </div>
+
+      <button onclick="closeCopyModal()" class="w-full py-2.5 bg-blue-600 text-white rounded-xl text-sm font-bold hover:bg-blue-700 transition">
+        Got it!
+      </button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
