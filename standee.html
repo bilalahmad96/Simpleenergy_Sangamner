@@ -3,131 +3,169 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Showroom Table Standee - Simple Energy Sangamner</title>
+  <title>Official Showroom QR Standee - Simple Energy Sangamner | Viraaj EV Motors</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Noto+Sans+Devanagari:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Inter', 'Noto Sans Devanagari', sans-serif;
+      -webkit-font-smoothing: antialiased;
     }
+    
+    /* Acrylic Standee Drop Shadow for on-screen viewing */
+    .acrylic-standee {
+      box-shadow: 0 25px 60px -15px rgba(0, 82, 255, 0.2), 0 0 0 1px rgba(226, 232, 240, 0.8);
+    }
+
+    /* Print Formatting (Perfect A4 / A5 Center Alignment) */
     @media print {
       .no-print {
         display: none !important;
       }
       body {
-        background: white;
-        padding: 0;
+        background: #ffffff !important;
+        padding: 0 !important;
+        margin: 0 !important;
       }
-      .standee-container {
+      .acrylic-standee {
         box-shadow: none !important;
-        border: 2px solid #0052ff !important;
+        border: 2px solid #cbd5e1 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        margin: 0 auto !important;
+        page-break-inside: avoid;
       }
     }
   </style>
 </head>
-<body class="bg-slate-100 min-h-screen p-4 sm:p-8 flex flex-col items-center justify-center">
+<body class="bg-slate-100 min-h-screen py-8 px-4 flex flex-col items-center justify-center">
 
-  <!-- Print Button Bar (Hidden in Print) -->
-  <div class="no-print mb-6 flex gap-4">
-    <button onclick="window.print()" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg transition flex items-center gap-2">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
-      </svg>
-      Print Showroom Standee (A4/A5)
-    </button>
-    <a href="index.html" class="px-6 py-3 bg-white hover:bg-slate-50 text-slate-700 font-bold rounded-xl border border-slate-300 shadow transition flex items-center gap-2">
-      ← Back to Review App
-    </a>
+  <!-- TOP ACTION BAR (Hidden in Print) -->
+  <div class="no-print mb-6 max-w-lg w-full flex flex-wrap items-center justify-between gap-3 bg-white p-3.5 rounded-2xl shadow-sm border border-slate-200">
+    <div class="flex items-center gap-2">
+      <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+      <span class="text-xs font-bold text-slate-700">Official Print-Ready Standee</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <button onclick="window.print()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl shadow transition flex items-center gap-1.5">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+        </svg>
+        Print Standee
+      </button>
+
+      <a href="assets/standee_printable_hd.png" download="SimpleEnergy_Sangamner_Standee_Printable_HD.png" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow transition flex items-center gap-1.5">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+        </svg>
+        Download HD PNG
+      </a>
+
+      <a href="admin.html" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl border border-slate-200 transition">
+        Admin Portal
+      </a>
+    </div>
   </div>
 
-  <!-- STANDEE CARD -->
-  <div class="standee-container bg-white w-full max-w-md rounded-3xl shadow-2xl border-4 border-blue-600 overflow-hidden text-center relative">
+  <!-- TABLETOP SHOWROOM STANDEE CARD (Matching Final Approved Master Design) -->
+  <div class="acrylic-standee bg-white w-full max-w-lg rounded-[2.5rem] p-7 sm:p-9 border border-slate-200 relative text-center overflow-hidden">
     
-    <!-- Header Top Strip -->
-    <div class="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 text-white py-3 px-4">
-      <div class="text-[11px] uppercase tracking-widest font-extrabold text-blue-200">अधिकृत विक्रेता / Authorized Dealer</div>
-      <div class="text-lg font-black tracking-wider">VIRAAJ EV MOTORS</div>
+    <!-- Top-Left Google Dots -->
+    <div class="absolute top-5 left-5 pointer-events-none select-none flex gap-1.5 items-start">
+      <div class="w-4 h-4 rounded-full bg-[#4285F4]"></div>
+      <div class="w-3 h-3 rounded-full bg-[#EA4335] mt-0.5"></div>
+      <div class="w-2.5 h-2.5 rounded-full bg-[#FBBC05] mt-3 -ml-4"></div>
     </div>
 
-    <div class="p-6">
+    <!-- Top-Right Google Dots -->
+    <div class="absolute top-5 right-5 pointer-events-none select-none flex gap-1.5 items-start justify-end">
+      <div class="w-3.5 h-3.5 rounded-full bg-[#FBBC05] mt-0.5"></div>
+      <div class="w-4 h-4 rounded-full bg-[#34A853]"></div>
+      <div class="w-2.5 h-2.5 rounded-full bg-[#4285F4] mt-3 -mr-4"></div>
+    </div>
+
+    <!-- Official Logo Display -->
+    <div class="flex justify-center mb-3 pt-2">
+      <img src="assets/user_logo_cropped.png" alt="Simple Energy Sangamner" class="h-16 sm:h-20 w-auto object-contain">
+    </div>
+
+    <!-- Dealer Sub-Badge -->
+    <div class="inline-block mb-3.5 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs sm:text-sm font-extrabold tracking-wide uppercase">
+      अधिकृत विक्रेता • AUTHORIZED DEALER : VIRAAJ EV MOTORS
+    </div>
+
+    <!-- Google Review Headline -->
+    <div class="flex items-center justify-center gap-0.5 text-3xl sm:text-4xl font-black mb-1 select-none">
+      <span class="text-[#4285F4]">G</span>
+      <span class="text-[#EA4335]">o</span>
+      <span class="text-[#FBBC05]">o</span>
+      <span class="text-[#4285F4]">g</span>
+      <span class="text-[#34A853]">l</span>
+      <span class="text-[#EA4335]">e</span>
+      <span class="text-slate-800 ml-2 font-black text-2xl sm:text-3xl">Reviews</span>
+    </div>
+
+    <h1 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight mb-4">
+      SCAN TO LEAVE US A REVIEW
+    </h1>
+
+    <!-- EXPANDED HIGH-CONTRAST QR CODE CONTAINER (4-Color Google Border) -->
+    <div class="relative inline-block my-2 p-3 bg-white rounded-3xl shadow-lg border-[6px] border-slate-900" style="border-image: linear-gradient(135deg, #4285F4 25%, #EA4335 25% 50%, #FBBC05 50% 75%, #34A853 75%) 14;">
       
-      <!-- Brand Logo -->
-      <div class="flex justify-center mb-3">
-        <img src="assets/brand-logo.jpg" alt="Simple Energy Sangamner" class="h-14 w-auto object-contain">
-      </div>
-
-      <!-- Main Heading -->
-      <div class="inline-block bg-blue-50 text-blue-800 text-xs font-black uppercase px-3 py-1 rounded-full mb-3 tracking-wide">
-        ⭐ Share Your Review in 10 Seconds ⭐
-      </div>
-
-      <h1 class="text-2xl font-black text-slate-900 leading-tight">
-        Loved Your Experience?
-      </h1>
-      <p class="text-sm font-semibold text-slate-600 mt-1">
-        तुमचा मौल्यवान अभिप्राय Google वर शेअर करा!
-      </p>
-
-      <!-- 5 Golden Stars Display -->
-      <div class="text-amber-400 text-2xl my-2 tracking-wider">
-        ★★★★★
-      </div>
-
-      <!-- QR Code Box -->
-      <div class="my-4 inline-block bg-white p-5 rounded-2xl border-2 border-blue-500 shadow-md">
-        <div id="standeeQr" class="flex justify-center"></div>
-        <p class="text-[11px] font-bold text-blue-600 mt-2 tracking-wider uppercase">Scan with Phone Camera</p>
-      </div>
-
-      <!-- 3 Simple Steps -->
-      <div class="bg-blue-50/70 border border-blue-100 rounded-2xl p-4 text-left text-xs space-y-2 mb-4">
-        <div class="flex items-center gap-2.5">
-          <span class="w-5 h-5 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center shrink-0 text-[10px]">1</span>
-          <span class="font-medium text-slate-700">Scan QR &amp; select your model (Simple One / Dot One)</span>
-        </div>
-        <div class="flex items-center gap-2.5">
-          <span class="w-5 h-5 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center shrink-0 text-[10px]">2</span>
-          <span class="font-medium text-slate-700">AI automatically crafts a professional review</span>
-        </div>
-        <div class="flex items-center gap-2.5">
-          <span class="w-5 h-5 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center shrink-0 text-[10px]">3</span>
-          <span class="font-medium text-slate-700">1-Tap <strong>Copy &amp; Post on Google Maps</strong></span>
-        </div>
-      </div>
-
-      <!-- Showroom Details -->
-      <div class="text-[11px] text-slate-600 border-t border-slate-200 pt-3 space-y-1">
-        <div class="font-bold text-slate-900 text-xs">
-          📞 8552885656 (आजच संपर्क करा)
-        </div>
-        <div>
-          📍 स.न. 117/1/1, पंचायत समिती जवळ, बुटेट शोरूमच्या शेजारी, नगर रोड, संगमनेर - 422605
-        </div>
+      <div class="p-2 bg-white rounded-2xl flex justify-center">
+        <!-- Mathematically exact, high-resolution QR code (792px source) -->
+        <img src="assets/real_qr_code.png" alt="Scan QR Code - Simple Energy Sangamner" class="w-64 h-64 sm:w-72 sm:h-72 object-contain">
       </div>
 
     </div>
 
-    <!-- Bottom Blue Accent Bar -->
-    <div class="bg-blue-600 py-1.5 text-white text-[10px] font-bold uppercase tracking-wider">
-      Simple Energy Sangamner • Deliveries &amp; Service
+    <!-- Scan Instructions & Website URL -->
+    <div class="mt-3">
+      <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-slate-100 text-slate-800 text-xs sm:text-sm font-extrabold uppercase tracking-wide">
+        <span>📷 Point Your Phone Camera to Scan</span>
+      </div>
+      <div class="mt-1.5 text-xs sm:text-sm text-blue-600 font-bold font-mono tracking-wider">
+        simpleenergysangamner.vercel.app
+      </div>
     </div>
+
+    <!-- 5 Golden Stars Display -->
+    <div class="flex justify-center items-center gap-1.5 text-[#FBBC04] text-3xl sm:text-4xl my-3">
+      <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+    </div>
+
+    <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-wider">
+      THANK YOU
+    </h2>
+    <p class="text-xs sm:text-sm font-semibold text-slate-500 mt-0.5 mb-4">
+      We appreciate your valuable feedback &amp; support!
+    </p>
+
+    <!-- Showroom Address & Helpline Strip -->
+    <div class="pt-3 border-t-2 border-slate-200 text-center space-y-1">
+      <div class="text-xs sm:text-sm font-black text-slate-800 uppercase tracking-wider">
+        VIRAAJ EV MOTORS • SIMPLE ENERGY SANGAMNER
+      </div>
+      <div class="text-[11px] sm:text-xs text-slate-600 font-semibold leading-relaxed max-w-sm mx-auto">
+        स.न. 117/1/1, पंचायत समिती जवळ, बुटेट शोरूमच्या शेजारी, नगर रोड, संगमनेर - 422605
+      </div>
+      <div class="text-xs sm:text-sm font-extrabold text-blue-700">
+        📞 Showroom Helpline: 8552885656
+      </div>
+    </div>
+
   </div>
 
   <script>
+    // Auto-trigger print dialog if opened with ?print=true
     window.addEventListener('load', () => {
-      const qrEl = document.getElementById('standeeQr');
-      if (qrEl) {
-        // Resolve path to index.html
-        const appUrl = window.location.href.replace('standee.html', 'index.html');
-        new QRCode(qrEl, {
-          text: appUrl,
-          width: 170,
-          height: 170,
-          colorDark: "#003bb5",
-          colorLight: "#ffffff",
-          correctLevel: QRCode.CorrectLevel.H
-        });
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('print') === 'true') {
+        setTimeout(() => {
+          window.print();
+        }, 400);
       }
     });
   </script>

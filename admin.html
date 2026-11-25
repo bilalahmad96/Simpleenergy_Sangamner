@@ -5,47 +5,74 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Portal - Simple Energy Sangamner | Viraaj EV Motors</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- QRCode.js for Admin Standee rendering -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <style>
+    @media print {
+      .no-print, header, .admin-analytics-section, .admin-table-section {
+        display: none !important;
+      }
+      body {
+        background: #ffffff !important;
+        padding: 0 !important;
+      }
+      #printableStandeeSection {
+        display: block !important;
+        margin: 0 auto !important;
+        max-width: 100% !important;
+        border: 2px solid #0052ff !important;
+      }
+    }
+  </style>
 </head>
 <body class="bg-slate-100 min-h-screen text-slate-800 font-sans">
 
   <!-- LOGIN SCREEN (Visible when not authenticated) -->
   <div id="loginSection" class="min-h-screen flex items-center justify-center p-4">
-    <div class="bg-white max-w-md w-full rounded-2xl shadow-xl p-8 border border-slate-200">
+    <div class="bg-white max-w-md w-full rounded-3xl shadow-2xl p-8 border border-slate-200">
       
       <div class="text-center mb-6 select-none">
-        <!-- Official Logo Image -->
         <div class="flex justify-center mb-3">
-          <img src="assets/official-logo.png" alt="Simple Energy Sangamner" class="h-14 w-auto object-contain">
+          <img src="assets/user_logo_cropped.png" alt="Simple Energy Sangamner" class="h-14 w-auto object-contain">
         </div>
-        <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">VIRAAJ EV MOTORS • SANGAMNER</p>
-        <h1 class="text-xl font-black text-slate-900 mt-3">Owner Admin Portal</h1>
-        <p class="text-xs text-slate-500 mt-1">Review Analytics &amp; Monthly Performance Dashboard</p>
+        <p class="text-[11px] font-extrabold text-slate-500 uppercase tracking-widest mt-1">VIRAAJ EV MOTORS • SANGAMNER</p>
+        <h1 class="text-2xl font-black text-slate-900 mt-2">Owner Admin Portal</h1>
+        <p class="text-xs text-slate-500 mt-0.5">Showroom Review Analytics &amp; Management</p>
       </div>
 
-      <div id="loginError" class="hidden mb-4 p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl font-medium"></div>
+      <div id="loginError" class="hidden mb-4 p-3.5 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl font-medium"></div>
 
       <form id="loginForm" class="space-y-4">
         <div>
           <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Username</label>
-          <input type="text" id="usernameInput" required class="w-full p-3 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Enter username">
+          <input type="text" id="usernameInput" required class="w-full p-3.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Enter username">
         </div>
 
         <div>
           <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Password</label>
-          <input type="password" id="passwordInput" required class="w-full p-3 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Enter password">
+          <input type="password" id="passwordInput" required class="w-full p-3.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Enter password">
         </div>
 
-        <button type="submit" class="brand-button-primary w-full py-3.5 rounded-xl font-bold text-sm transition">
+        <!-- STAY LOGGED IN CHECKBOX (User-requested feature) -->
+        <div class="flex items-center justify-between pt-1">
+          <label class="flex items-center gap-2 cursor-pointer select-none">
+            <input type="checkbox" id="stayLoggedInCheckbox" checked class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500 cursor-pointer">
+            <span class="text-xs font-bold text-slate-700">Stay logged in on this device</span>
+          </label>
+          <span class="text-[10px] text-slate-400">Keeps you signed in</span>
+        </div>
+
+        <button type="submit" class="brand-button-primary w-full py-4 rounded-xl font-bold text-sm transition mt-2">
           Secure Login 🔒
         </button>
       </form>
 
       <div class="mt-6 pt-4 border-t border-slate-100 text-center text-[11px] text-slate-400">
-        Simple Energy Sangamner • Authorized Access Only
+        Simple Energy Sangamner • Authorized Dealer Access
       </div>
     </div>
   </div>
@@ -54,11 +81,11 @@
   <div id="dashboardSection" class="hidden min-h-screen pb-12">
     
     <!-- Top Admin Bar -->
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm no-print">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap justify-between items-center gap-4">
         
         <div class="flex items-center gap-3 select-none">
-          <img src="assets/official-logo.png" alt="Simple Energy Sangamner" class="h-10 w-auto object-contain">
+          <img src="assets/user_logo_cropped.png" alt="Simple Energy Sangamner" class="h-10 w-auto object-contain">
           <div class="h-6 w-px bg-slate-300 hidden sm:block"></div>
           <div class="hidden sm:flex flex-col">
             <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Authorized Dealer: VIRAAJ EV MOTORS</div>
@@ -66,7 +93,7 @@
           </div>
         </div>
 
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2.5">
           <!-- Session Badge -->
           <div id="activeSessionsBadge" class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-xs font-semibold">
             <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -78,7 +105,7 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
             </svg>
-            <span>📥 Export to Excel</span>
+            <span>📥 Export Excel</span>
           </button>
 
           <!-- Back to Customer View -->
@@ -89,7 +116,7 @@
             </svg>
           </a>
 
-          <!-- Logout Button -->
+          <!-- Logout Button (Resets persistent login) -->
           <button id="logoutBtn" class="px-3 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-xl text-xs font-semibold transition">
             Logout
           </button>
@@ -102,7 +129,7 @@
     <main class="max-w-7xl mx-auto px-4 sm:px-6 mt-6">
       
       <!-- Welcome Header -->
-      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-6">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-6 no-print">
         <div>
           <h2 class="text-xl sm:text-2xl font-black text-slate-900">Showroom Review Performance</h2>
           <p class="text-xs text-slate-500 mt-0.5">Real-time overview of customer reviews, star ratings, and vehicle models</p>
@@ -113,7 +140,7 @@
       </div>
 
       <!-- KPI METRIC CARDS -->
-      <div class="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4 mb-6">
+      <div class="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4 mb-6 admin-analytics-section no-print">
         
         <!-- Total Reviews -->
         <div class="brand-card p-4 bg-white border-blue-100">
@@ -155,8 +182,116 @@
 
       </div>
 
+      <!-- EMBEDDED SHOWROOM QR STANDEE SECTION (Integrated right inside Admin Dashboard) -->
+      <div class="brand-card bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-950 rounded-3xl p-6 sm:p-7 mb-6 text-white shadow-xl relative overflow-hidden border border-blue-900">
+        
+        <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
+          
+          <!-- Left: Info & Actions -->
+          <div class="flex-1 text-center lg:text-left space-y-3">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-bold uppercase tracking-wider">
+              <span>⚡ Official Tabletop QR Standee (Print-Ready HD)</span>
+            </div>
+            
+            <h3 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
+              Customer Google Review Standee
+            </h3>
+            
+            <p class="text-xs sm:text-sm text-blue-100 max-w-xl leading-relaxed">
+              Place this acrylic standee on your delivery desk and service billing counter. Customers scan the large Google-colored QR code with their phone camera to instantly write their 5-star Google review!
+            </p>
+
+            <div class="p-3.5 bg-black/30 rounded-2xl border border-white/10 text-xs text-blue-200 space-y-1.5">
+              <div><strong>Live Review URL:</strong> <a href="https://simpleenergysangamner.vercel.app" target="_blank" class="text-emerald-400 font-mono underline hover:text-emerald-300">https://simpleenergysangamner.vercel.app</a></div>
+              <div><strong>Authorized Dealer:</strong> VIRAAJ EV MOTORS (अधिकृत विक्रेता) • 📞 8552885656</div>
+              <div><strong>Print Specs:</strong> 1400×2000 High-Definition Master Artwork (Suitable for A4, A5 &amp; Acrylic Tabletop L-Stands)</div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
+              <button onclick="printEmbeddedStandee()" class="px-5 py-2.5 bg-blue-500 hover:bg-blue-400 text-white font-bold text-xs rounded-xl shadow-lg transition flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+                </svg>
+                <span>Print Standee (A4/A5)</span>
+              </button>
+
+              <button onclick="downloadStandeeHD()" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                </svg>
+                <span>Download HD Standee (PNG)</span>
+              </button>
+              
+              <button onclick="downloadQRCodePNG()" class="px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white font-semibold text-xs rounded-xl border border-white/20 transition flex items-center gap-2">
+                <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path>
+                </svg>
+                <span>Download QR Image</span>
+              </button>
+
+              <a href="standee.html" target="_blank" class="px-4 py-2.5 bg-white/10 hover:bg-white/20 text-blue-200 font-semibold text-xs rounded-xl border border-white/20 transition flex items-center gap-1.5">
+                <span>Open Dedicated Standee Page ↗</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Right: Compact Acrylic Standee Card Preview (With User Logo & Real Big QR) -->
+          <div class="w-full max-w-[290px] bg-white text-slate-800 rounded-3xl p-4 shadow-2xl border-4 border-blue-500 text-center shrink-0 relative overflow-hidden group">
+            
+            <!-- Acrylic Glass Reflection Badge -->
+            <div class="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[9px] font-black uppercase tracking-wider">
+              ✓ Print-Ready
+            </div>
+
+            <!-- Top Dots -->
+            <div class="flex items-center justify-between px-1 mb-1">
+              <div class="flex gap-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#4285F4]"></span>
+                <span class="w-2 h-2 rounded-full bg-[#EA4335]"></span>
+              </div>
+              <div class="flex gap-1">
+                <span class="w-2 h-2 rounded-full bg-[#FBBC05]"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-[#34A853]"></span>
+              </div>
+            </div>
+
+            <!-- User Cropped Logo -->
+            <div class="flex justify-center my-1">
+              <img src="assets/user_logo_cropped.png" alt="Simple Energy Sangamner" class="h-9 w-auto object-contain">
+            </div>
+
+            <div class="text-[9px] font-extrabold uppercase tracking-widest text-blue-800 bg-blue-50 py-0.5 px-2 rounded-full inline-block mb-1">
+              VIRAAJ EV MOTORS
+            </div>
+            
+            <div class="flex justify-center items-center gap-0.5 text-xs font-black my-1">
+              <span class="text-[#4285F4]">G</span><span class="text-[#EA4335]">o</span><span class="text-[#FBBC05]">o</span><span class="text-[#4285F4]">g</span><span class="text-[#34A853]">l</span><span class="text-[#EA4335]">e</span>
+              <span class="text-slate-800 ml-1 text-[11px]">Reviews</span>
+            </div>
+
+            <!-- Large Scannable QR Container -->
+            <div class="my-1.5 p-2 bg-white rounded-2xl border-2 border-slate-900 inline-block shadow-sm" style="border-image: linear-gradient(135deg, #4285F4, #EA4335, #FBBC05, #34A853) 4;">
+              <img src="assets/real_qr_code.png" alt="Scannable QR Code" class="w-36 h-36 object-contain">
+              <div class="text-[9px] font-black text-blue-700 uppercase tracking-wider mt-1">Scan with Phone 📷</div>
+            </div>
+
+            <div class="text-[#FBBC04] text-xs tracking-wider">★★★★★</div>
+            <div class="text-[11px] font-black text-slate-900 mt-0.5">THANK YOU</div>
+            <div class="text-[9px] text-slate-500 font-semibold mt-0.5">simpleenergysangamner.vercel.app</div>
+
+            <!-- Hover overlay button to open standee -->
+            <a href="standee.html" target="_blank" class="mt-2 block w-full py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold text-[10px] rounded-xl border border-blue-200 transition">
+              Click to View Full Standee ↗
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+
       <!-- ANALYTICS BREAKDOWN SECTION -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 admin-analytics-section no-print">
         
         <!-- Stars Breakdown -->
         <div class="brand-card p-5 bg-white">
@@ -232,7 +367,7 @@
       </div>
 
       <!-- DETAILED REVIEWS TABLE & FILTER -->
-      <div class="brand-card bg-white overflow-hidden">
+      <div class="brand-card bg-white overflow-hidden admin-table-section">
         
         <!-- Table Header & Controls -->
         <div class="p-4 sm:p-5 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
@@ -282,7 +417,7 @@
       </div>
 
       <!-- Showroom Contact Quick Reference in Dashboard -->
-      <div class="mt-6 p-4 bg-white rounded-xl border border-slate-200 text-xs text-slate-600 flex flex-wrap justify-between items-center gap-2">
+      <div class="mt-6 p-4 bg-white rounded-xl border border-slate-200 text-xs text-slate-600 flex flex-wrap justify-between items-center gap-2 no-print">
         <div>
           <strong>Showroom:</strong> Simple Energy Sangamner (Viraaj EV Motors) | <strong>Phone:</strong> 8552885656 | <strong>Address:</strong> Nagar Road, Sangamner - 422605
         </div>

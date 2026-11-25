@@ -6,18 +6,18 @@ const ADMIN_CREDENTIALS = {
   password: 'Sangamner9919'
 };
 
+const VERCEL_PRODUCTION_URL = "https://simpleenergysangamner.vercel.app";
 const MAX_CONCURRENT_LOGINS = 2;
-const SESSION_TIMEOUT_MS = 45 * 60 * 1000; // 45 minutes session timeout
+const SESSION_TIMEOUT_MS = 24 * 60 * 60 * 1000; // 24 hours for persistent sessions
 
-let currentSessionId = sessionStorage.getItem('se_admin_session_id');
+let currentSessionId = localStorage.getItem('se_admin_session_id') || sessionStorage.getItem('se_admin_session_id');
 
-// Clean up any previously seeded mock/fake data so ONLY real customer reviews appear
+// Clean up any previously seeded mock/fake data
 function purgeFakeSeedData() {
   try {
     const raw = localStorage.getItem('simpleenergy_reviews_log');
     if (!raw) return;
     let reviews = JSON.parse(raw);
-    // Remove any review containing 'rev_seed_'
     const realReviews = reviews.filter(r => !r.id || !r.id.startsWith('rev_seed_'));
     localStorage.setItem('simpleenergy_reviews_log', JSON.stringify(realReviews));
   } catch (e) {
@@ -25,7 +25,7 @@ function purgeFakeSeedData() {
   }
 }
 
-// Session Management (Max 2 Concurrent Logins)
+// Session Management with "Stay Logged In" Support
 function getActiveSessions() {
   const raw = localStorage.getItem('simpleenergy_admin_sessions');
   const now = Date.now();
@@ -41,15 +41,19 @@ function getActiveSessions() {
   }
 }
 
-function registerSession() {
+function registerSession(stayLoggedIn = true) {
   const sessionId = 'sess_' + Math.random().toString(36).substring(2) + Date.now();
   let sessions = getActiveSessions();
 
   if (sessions.length >= MAX_CONCURRENT_LOGINS) {
-    return {
-      success: false,
-      message: `Limit reached: Maximum ${MAX_CONCURRENT_LOGINS} admin logins are currently active. If you closed a browser without logging out, click below to clear past sessions.`
-    };
+    // If current device already has a session, refresh it
+    const existing = sessions.find(s => s.sessionId === currentSessionId);
+    if (!existing) {
+      return {
+        success: false,
+        message: `Limit reached: Maximum ${MAX_CONCURRENT_LOGINS} admin logins are currently active. If you closed a tab without logging out, click below to clear past sessions.`
+      };
+    }
   }
 
   sessions.push({
@@ -60,8 +64,16 @@ function registerSession() {
   });
 
   localStorage.setItem('simpleenergy_admin_sessions', JSON.stringify(sessions));
-  sessionStorage.setItem('se_admin_session_id', sessionId);
   currentSessionId = sessionId;
+
+  if (stayLoggedIn) {
+    localStorage.setItem('se_admin_stay_logged_in', 'true');
+    localStorage.setItem('se_admin_session_id', sessionId);
+  } else {
+    localStorage.removeItem('se_admin_stay_logged_in');
+    sessionStorage.setItem('se_admin_session_id', sessionId);
+  }
+
   return { success: true };
 }
 
@@ -76,38 +88,98 @@ function touchSession() {
 }
 
 function removeCurrentSession() {
-  if (!currentSessionId) return;
-  let sessions = getActiveSessions();
-  sessions = sessions.filter(s => s.sessionId !== currentSessionId);
-  localStorage.setItem('simpleenergy_admin_sessions', JSON.stringify(sessions));
+  // Explicit logout resets persistent login completely
+  localStorage.removeItem('se_admin_stay_logged_in');
+  localStorage.removeItem('se_admin_session_id');
   sessionStorage.removeItem('se_admin_session_id');
+
+  if (currentSessionId) {
+    let sessions = getActiveSessions();
+    sessions = sessions.filter(s => s.sessionId !== currentSessionId);
+    localStorage.setItem('simpleenergy_admin_sessions', JSON.stringify(sessions));
+  }
+
   currentSessionId = null;
 }
 
 function forceResetSessions() {
   localStorage.removeItem('simpleenergy_admin_sessions');
+  localStorage.removeItem('se_admin_stay_logged_in');
+  localStorage.removeItem('se_admin_session_id');
   sessionStorage.removeItem('se_admin_session_id');
   currentSessionId = null;
   alert("All active admin sessions have been reset. You can now log in.");
   window.location.reload();
 }
 
-// Authentication check
+// Check authentication status
 function checkAuth() {
+  const isPersistent = localStorage.getItem('se_admin_stay_logged_in') === 'true';
   const sessions = getActiveSessions();
-  const isValid = currentSessionId && sessions.some(s => s.sessionId === currentSessionId);
+  const isValidSession = currentSessionId && sessions.some(s => s.sessionId === currentSessionId);
 
   const loginSec = document.getElementById('loginSection');
   const dashSec = document.getElementById('dashboardSection');
 
-  if (isValid) {
+  // If "Stay Logged In" is true or active session exists
+  if (isPersistent || isValidSession) {
+    // If persistent but session expired from timeout, re-register automatically
+    if (isPersistent && !isValidSession) {
+      registerSession(true);
+    }
+    
     loginSec.classList.add('hidden');
     dashSec.classList.remove('hidden');
     loadDashboard();
+    initAdminEmbeddedQR();
   } else {
     loginSec.classList.remove('hidden');
     dashSec.classList.add('hidden');
   }
+}
+
+// Render QR Code inside the Embedded Standee Section
+let qrRendered = false;
+function initAdminEmbeddedQR() {
+  if (qrRendered) return;
+  const qrBox = document.getElementById('adminEmbeddedQr');
+  if (qrBox && typeof QRCode !== 'undefined') {
+    qrBox.innerHTML = '';
+    new QRCode(qrBox, {
+      text: VERCEL_PRODUCTION_URL,
+      width: 140,
+      height: 140,
+      colorDark: "#003bb5",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H
+    });
+    qrRendered = true;
+  }
+}
+
+// Print Standee Trigger (Opens Dedicated Standee Page in Print Mode)
+function printEmbeddedStandee() {
+  window.open('standee.html?print=true', '_blank');
+}
+
+// Download Full Master Standee Artwork (1400x2000 HD PNG for acrylic/paper printing)
+function downloadStandeeHD() {
+  const a = document.createElement('a');
+  a.href = 'assets/standee_printable_hd.png';
+  a.download = 'SimpleEnergy_Sangamner_Standee_Printable_HD.png';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+// Download Standalone Scannable QR Code as PNG
+function downloadQRCodePNG() {
+  const a = document.createElement('a');
+  a.href = 'assets/real_qr_code.png';
+  a.download = 'SimpleEnergy_Sangamner_QRCode_Scannable.png';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 }
 
 // Dashboard Data Loading & Calculation (Real Data Only)
@@ -124,7 +196,6 @@ function loadDashboard() {
     });
   }
 
-  // Active Sessions Badge
   const sessions = getActiveSessions();
   const sessionCountText = document.getElementById('sessionCountText');
   if (sessionCountText) {
@@ -133,7 +204,6 @@ function loadDashboard() {
 
   const reviews = JSON.parse(localStorage.getItem('simpleenergy_reviews_log') || '[]');
 
-  // Current Date Metrics
   const now = new Date();
   const currentMonth = now.getMonth();
   const currentYear = now.getFullYear();
@@ -167,7 +237,6 @@ function loadDashboard() {
 
     if (r.monthYear) monthsSet.add(r.monthYear);
 
-    // Month Counts
     if (rYear === currentYear && rMonth === currentMonth) {
       thisMonthCount++;
     } else if (
@@ -177,26 +246,22 @@ function loadDashboard() {
       lastMonthCount++;
     }
 
-    // Year Count
     if (rYear === currentYear) {
       thisYearCount++;
     }
 
-    // Stars
     const s = r.stars || 5;
     starSum += s;
     if (s === 5) star5Count++;
     else if (s === 4) star4Count++;
     else starGrievanceCount++;
 
-    // Purpose
     if (r.purpose && r.purpose.includes('Delivery')) {
       salesCount++;
     } else {
       serviceCount++;
     }
 
-    // Models
     const cat = r.modelCategory || '';
     if (cat.includes('Wave')) waveCount++;
     else if (cat.includes('One')) oneCount++;
@@ -245,11 +310,10 @@ function loadDashboard() {
     });
   }
 
-  // Render Table
   renderReviewsTable();
 }
 
-// Render Reviews Table with Filter Support
+// Render Reviews Table
 function renderReviewsTable() {
   const reviews = JSON.parse(localStorage.getItem('simpleenergy_reviews_log') || '[]');
   const tableBody = document.getElementById('reviewsTableBody');
@@ -430,6 +494,7 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       const user = document.getElementById('usernameInput').value.trim();
       const pass = document.getElementById('passwordInput').value.trim();
+      const stayLoggedIn = document.getElementById('stayLoggedInCheckbox').checked;
 
       if (user !== ADMIN_CREDENTIALS.username || pass !== ADMIN_CREDENTIALS.password) {
         loginError.textContent = "Invalid username or password. Please try again.";
@@ -437,7 +502,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      const sessionResult = registerSession();
+      const sessionResult = registerSession(stayLoggedIn);
       if (!sessionResult.success) {
         loginError.innerHTML = `
           <div>${sessionResult.message}</div>
@@ -452,6 +517,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Explicit Logout Button
   const logoutBtn = document.getElementById('logoutBtn');
   if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
@@ -471,5 +537,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (filterMonth) filterMonth.addEventListener('change', renderReviewsTable);
 
   setInterval(touchSession, 2 * 60 * 1000);
+
+  // Check persistent login immediately on page load
   checkAuth();
 });
